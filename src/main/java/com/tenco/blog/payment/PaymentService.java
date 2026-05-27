@@ -36,7 +36,7 @@ public class PaymentService {
      * - 위변조 방지 (paymenId 서버측에서 생성해서 내려 줌)
      *
      */
-    public PaymentResponse.prePreDTO 결제요청생성(Integer userid, Integer amount) {
+    public PaymentResponse.PrePareDTO  결제요청생성(Integer userid, Integer amount) {
 
 
         // 1, 사용자 존재 유무 확인
@@ -54,7 +54,7 @@ public class PaymentService {
             paymentId = generatePaymentId(userid);
         }
 
-        return new PaymentResponse.prePreDTO(paymentId,amount,storeId,channelKey);
+        return new PaymentResponse.PrePareDTO (paymentId,amount,storeId,channelKey);
     }
 
     private String generatePaymentId(Integer userId) {

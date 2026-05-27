@@ -34,14 +34,14 @@ public class PaymentController {
         reqDTO.validate();
 
         // 기능 호출
-        PaymentResponse.prePreDTO prePreDTO = paymentService.결제요청생성(sessionUser.getId(), reqDTO.getAmount());
+        PaymentResponse.PrePareDTO  prepareDTO = paymentService.결제요청생성(sessionUser.getId(), reqDTO.getAmount());
 
 
         return ResponseEntity.ok().body(
-                Map.of("paymentId", prePreDTO.getPaymentId(),
-                        "amount", prePreDTO.getAmount(),
-                        "storeId", prePreDTO.getStoreId(),
-                        "channelKey", prePreDTO.getChannelKey()));
+                Map.of("paymentId", prepareDTO.getPaymentId(),
+                        "amount", prepareDTO.getAmount(),
+                        "storeId", prepareDTO.getStoreId(),
+                        "channelKey", prepareDTO.getChannelKey()));
     }
 
 } // end of PaymentController

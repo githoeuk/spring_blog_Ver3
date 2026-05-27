@@ -19,7 +19,7 @@ import lombok.Data;
 public class PaymentResponse {
 
     @Data
-    public static class prePreDTO {
+    public static class PrePareDTO  {
         private String paymentId;
         private Integer amount;
         private String storeId;
@@ -27,7 +27,7 @@ public class PaymentResponse {
 
 
         @Builder
-        public prePreDTO(String paymentId, Integer amount, String storeId, String channelKey) {
+        public PrePareDTO (String paymentId, Integer amount, String storeId, String channelKey) {
             this.paymentId = paymentId;
             this.amount = amount;
             this.storeId = storeId;
