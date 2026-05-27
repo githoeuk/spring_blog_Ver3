@@ -20,31 +20,42 @@
                 <label class="form-lable fw-bold mb-3">충전할 포인트 선택</label>
                 <div class="row g-3">
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-outline-primary w-100 point-btn">1,000P</button>
+                        <button type="button" class="btn btn-outline-primary w-100 point-btn" data-amount="1000">
+                            1,000P
+                        </button>
                     </div>
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-outline-primary w-100 point-btn">5,000P</button>
+                        <button type="button" class="btn btn-outline-primary w-100 point-btn" data-amount="5000">
+                            5,000P
+                        </button>
                     </div>
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-outline-primary w-100 point-btn">10,000P</button>
+                        <button type="button" class="btn btn-outline-primary w-100 point-btn" data-amount="10000">
+                            10,000P
+                        </button>
                     </div>
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-outline-primary w-100 point-btn">20,000P</button>
+                        <button type="button" class="btn btn-outline-primary w-100 point-btn" data-amount="20000">
+                            20,000P
+                        </button>
                     </div>
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-outline-primary w-100 point-btn">50,000P</button>
+                        <button type="button" class="btn btn-outline-primary w-100 point-btn" data-amount="50000">
+                            50,000P
+                        </button>
                     </div>
                     <div class="col-md-4">
-                        <button type="button" class="btn btn-outline-primary w-100 point-btn">100,000P</button>
+                        <button type="button" class="btn btn-outline-primary w-100 point-btn" data-amount="100000">
+                            100,000P
+                        </button>
                     </div>
                 </div>
             </div>
 
-
             <div class="mb-4">
                 <label class="form-label fw-bold">충전 예정 금액</label>
                 <p class="form-control-plaintext">
-                    <span class="badge bg-success fs-4 " id="selectedAmount">0 P</span>
+                    <span class="badge bg-success fs-4" id="selectedAmount">0 </span> P
                 </p>
             </div>
             <div class="d-grid gap-2">
@@ -54,27 +65,58 @@
         </div>
     </div>
 </div>
-
-<!--portone api 결제 요청-->
 <script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
-
 <script>
-    <!-- DOM로드가 완전히 되면 그 다음 function() 수행 해! -->
-        document.addEventListener("DOMContentLoaded", function() {
-            let selectedAmount = 0;
+    <!-- DOM 로드가 완전히 되면 그다음 funtion() 수행 해!   -->
+    document.addEventListener("DOMContentLoaded", function() {
+        let selectedAmount = 0;
+        // 요소 준비
+        const btnList = document.querySelectorAll(".point-btn");
+        const displayAmount = document.querySelector("#selectedAmount");
+        const chargeBtn = document.querySelector("#charge-btn");
 
-            // 요소 준비
-            const btnList = document.querySelectorAll(".point-btn");
-            const displayAmount = document.querySelector("#seletedAmount");
-            const chargeBtn = docment.querySelector("#charge-btn");
+        // 이벤트 리스너 등록
+        btnList.forEach(btn => {
+            // 각 버튼에 클릭 이벤트 리스너 등록 처리
+            btn.addEventListener('click', function() {
+                // btn 에 class 속성 active 일단 전체 제거
+                btnList.forEach(b => b.classList.remove('active'));
+                // 선택된 btn class 속성 active 추가
+                this.classList.add('active');
 
-            console.log(btnList);
-            console.log(displayAmount);
-            console.log(chargeBtn);
+                // 버튼에 접근(data-amount)
+                selectedAmount = parseInt(this.getAttribute('data-amount'));
 
+                // displayAmount 선택된 금액으로 갱신
+                displayAmount.textContent = selectedAmount;
+                chargeBtn.disabled = false;
 
+            });
         });
-</script>
 
+        // 충전하기 버튼 3단계 통신처리 (실제 PG 사 결제 처리)
+        chargeBtn.addEventListener('click', function() {
+            if(selectedAmount <= 0){
+                return;
+            }
+            // 충전 요청 이벤트가 일어났을 때 사용자가 빠르게 두번 클릭 시 두번 이벤트가 발생에 대한 방어적 코드
+            chargeBtn.disabled = true;
+
+            // -- 방어적 코드
+            // 우리 서버에 주문이라는 영수증을 생성해서 PG사에 결제 요청할 예정
+            try{
+                // 1. 사전 결제 처리 요청 생성 (우리 서버)
+                // fetch('/api/payment/prepare');
+
+            }catch(error){
+                alert(error.message);
+            }finally{
+                // 다시 활성화 처리(오류 발생 시)
+                chargeBtn.disabled = false;
+            }
+        });
+
+    });
+</script>
 {{> layout/footer}}
 
