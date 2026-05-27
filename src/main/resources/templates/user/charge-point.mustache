@@ -1,0 +1,80 @@
+{{> layout/header}}
+<div class="container p-5 flex-grow-1">
+    <div class="card">
+
+        <div class="card-header">
+            <h4>포인트충전</h4>
+        </div>
+
+        <div class="card-body">
+
+            <div>
+                <label class="form-label fw-bold">현재 보유 보인트</label>
+                <div class="mb-4">
+                    <span class="badge bg-primary fs-5">{{user.point}} P</span>
+                </div>
+            </div>
+            <hr>
+
+            <div class="mb-4">
+                <label class="form-lable fw-bold mb-3">충전할 포인트 선택</label>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-outline-primary w-100 point-btn">1,000P</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-outline-primary w-100 point-btn">5,000P</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-outline-primary w-100 point-btn">10,000P</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-outline-primary w-100 point-btn">20,000P</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-outline-primary w-100 point-btn">50,000P</button>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-outline-primary w-100 point-btn">100,000P</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mb-4">
+                <label class="form-label fw-bold">충전 예정 금액</label>
+                <p class="form-control-plaintext">
+                    <span class="badge bg-success fs-4 " id="selectedAmount">0 P</span>
+                </p>
+            </div>
+            <div class="d-grid gap-2">
+                <button type="button" id="charge-btn" class="btn btn-primary" disabled>충전하기</button>
+                <a href="/user/detail" class="btn btn-secondary">취소</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--portone api 결제 요청-->
+<script src="https://cdn.portone.io/v2/browser-sdk.js"></script>
+
+<script>
+    <!-- DOM로드가 완전히 되면 그 다음 function() 수행 해! -->
+        document.addEventListener("DOMContentLoaded", function() {
+            let selectedAmount = 0;
+
+            // 요소 준비
+            const btnList = document.querySelectorAll(".point-btn");
+            const displayAmount = document.querySelector("#seletedAmount");
+            const chargeBtn = docment.querySelector("#charge-btn");
+
+            console.log(btnList);
+            console.log(displayAmount);
+            console.log(chargeBtn);
+
+
+        });
+</script>
+
+{{> layout/footer}}
+
