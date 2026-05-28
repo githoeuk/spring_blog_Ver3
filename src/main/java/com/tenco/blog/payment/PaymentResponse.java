@@ -13,6 +13,7 @@ package com.tenco.blog.payment;
 //            payMethod: "CARD",
 //});
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Data;
 
@@ -32,6 +33,38 @@ public class PaymentResponse {
             this.amount = amount;
             this.storeId = storeId;
             this.channelKey = channelKey;
+        }
+    } // end of PrePareDTO
+
+
+    @Data
+    public static class CompleteDTO{
+        private Integer amount;
+        private Integer currentPoint;
+
+
+        @Builder
+        public CompleteDTO(Integer amount, Integer currentPoint) {
+            this.amount = amount;
+            this.currentPoint = currentPoint;
+        }
+    } // end of CompleteDTO
+
+    // 포트원 단건 조회 api 응답
+    @Data
+    // JSON 문자열에는 값이 있고, 자바 클래스 필드에는 선언이 없다면 그냥 무시해라
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class PortOnePayment{
+        private String status; // READY, PAID , FAILED , CANCELLED
+        private String id; // paymentId (우리 서버에서 생성한 주문 번호)
+        private String pgTxId; // pg사 거래번호 (간혹 null 이 될 수 있음)
+        private Amount amount;
+
+        @Data
+        public static class Amount{
+            private Integer total;
+            private Integer taxFree;
+            private Integer vat;
         }
     }
 

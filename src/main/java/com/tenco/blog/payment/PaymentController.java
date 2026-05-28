@@ -34,7 +34,7 @@ public class PaymentController {
         reqDTO.validate();
 
         // 기능 호출
-        PaymentResponse.PrePareDTO  prepareDTO = paymentService.결제요청생성(sessionUser.getId(), reqDTO.getAmount());
+        PaymentResponse.PrePareDTO prepareDTO = paymentService.결제요청생성(sessionUser.getId(), reqDTO.getAmount());
 
 
         return ResponseEntity.ok().body(
@@ -42,6 +42,38 @@ public class PaymentController {
                         "amount", prepareDTO.getAmount(),
                         "storeId", prepareDTO.getStoreId(),
                         "channelKey", prepareDTO.getChannelKey()));
-    }
+    }// end of preparePayment
+
+
+    // 메세지 컨버터
+    // /api/payment/complete
+    @PostMapping("/api/payment/complete")
+    public ResponseEntity<?> completePayment(@RequestBody PaymentRequest.CompleteDTO reqDTO,
+                                             HttpSession session) {
+
+        // 인증 검사
+        User sessionUser = (User) session.getAttribute(Define.SESSION_USER);
+        if (sessionUser == null) {
+            ResponseEntity.status(401).body(Map.of("message", "로그인이 필요합니다."));
+        }
+        // 유효성 검사
+        reqDTO.validate();
+
+
+        PaymentResponse.CompleteDTO completeDTO
+                = paymentService.결제검증후포인트충전(sessionUser.getId(), reqDTO.getPaymentId());
+
+
+        // 세션 동기화 처리
+        sessionUser.setPoint(completeDTO.getCurrentPoint());
+        session.setAttribute(Define.SESSION_USER,sessionUser);
+
+
+        // ResponseEntity.ok() => http 상태 200번
+        // 자동으로 JSON으로 변환해서 전송한다.
+        return ResponseEntity.ok().body(completeDTO);
+
+
+    } // completePayment
 
 } // end of PaymentController
