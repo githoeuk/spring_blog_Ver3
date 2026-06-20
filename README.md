@@ -1,4 +1,4 @@
-# [cite_start]🚀 Premium Content & Point Billing Platform (Spring Blog Ver.3) [cite: 757]
+# 🚀 Premium Content & Point Billing Platform (Spring Blog Ver.3) [cite: 757]
 
 [cite_start]본 프로젝트는 단순한 블로그 기능을 넘어, **PortOne PG API를 활용한 실제 결제 프로세스**와 **포인트 기반의 유료 콘텐츠 소비 아키텍처**를 구축한 웹 애플리케이션입니다. [cite: 757]
 
